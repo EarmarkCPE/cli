@@ -8,6 +8,8 @@
 * Run `go build .`
 * The new executable should be now in the root of the project and called `cli`.
 * Create an alias if you'd like. `alias supabase-latest="<project-dir>/cli/cli"`, subtituting your project directory for where you cloned the project.
+  * `source` your sh rc file. 
+  * Go into any supabase project and use it like normal `supabase-latest status` 
 
 # Supabase CLI (v1)
 
