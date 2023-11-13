@@ -1,6 +1,14 @@
 > [!IMPORTANT]
 > This is a temporary fork until the latest CLI supports the latest GraphQL features.
 
+# How to Use
+
+* Install latest [go](https://go.dev/doc/install).
+* Checkout this as a sibling directory of your Supabase project.
+* Run `go build .`
+* The new executable should be now in the root of the project and called `cli`.
+* Create an alias if you'd like. `alias supabase-latest="<project-dir>/cli/cli"`, subtituting your project directory for where you cloned the project.
+
 # Supabase CLI (v1)
 
 [![Coverage Status](https://coveralls.io/repos/github/supabase/cli/badge.svg?branch=main)](https://coveralls.io/github/supabase/cli?branch=main)
