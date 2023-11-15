@@ -131,6 +131,9 @@ var Config = config{
 				"email_change": {},
 			},
 		},
+		Sms: sms{
+			Template: "Your code is {{ .Code }} .",
+		},
 		External: map[string]provider{
 			"apple":     {},
 			"azure":     {},
@@ -182,7 +185,7 @@ var Config = config{
 // Use `mapstructure:"anon_key"` tag only if you want inject values from a predictable environment
 // variable, such as SUPABASE_AUTH_ANON_KEY.
 //
-// Default values for internal configs should be added to `var Config` initialiser.
+// Default values for internal configs should be added to `var Config` initializer.
 type (
 	config struct {
 		ProjectId string              `toml:"project_id"`
@@ -287,6 +290,7 @@ type (
 	sms struct {
 		EnableSignup        bool              `toml:"enable_signup"`
 		EnableConfirmations bool              `toml:"enable_confirmations"`
+		Template            string            `toml:"template"`
 		Twilio              twilioConfig      `toml:"twilio" mapstructure:"twilio"`
 		TwilioVerify        twilioConfig      `toml:"twilio_verify" mapstructure:"twilio_verify"`
 		Messagebird         messagebirdConfig `toml:"messagebird" mapstructure:"messagebird"`

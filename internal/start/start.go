@@ -414,7 +414,7 @@ EOF
 			"GOTRUE_SMS_MAX_FREQUENCY=5s",
 			"GOTRUE_SMS_OTP_EXP=6000",
 			"GOTRUE_SMS_OTP_LENGTH=6",
-			"GOTRUE_SMS_TEMPLATE=Your code is {{ .Code }}",
+			fmt.Sprintf("GOTRUE_SMS_TEMPLATE=%v", utils.Config.Auth.Sms.Template),
 			"GOTRUE_SMS_TEST_OTP=" + testOTP.String(),
 
 			fmt.Sprintf("GOTRUE_SECURITY_REFRESH_TOKEN_ROTATION_ENABLED=%v", utils.Config.Auth.EnableRefreshTokenRotation),
@@ -813,6 +813,8 @@ EOF
 					fmt.Sprintf("LOGFLARE_URL=http://%v:4000", utils.LogflareId),
 					fmt.Sprintf("NEXT_PUBLIC_ENABLE_LOGS=%v", utils.Config.Analytics.Enabled),
 					fmt.Sprintf("NEXT_ANALYTICS_BACKEND_PROVIDER=%v", utils.Config.Analytics.Backend),
+					// Ref: https://github.com/vercel/next.js/issues/51684#issuecomment-1612834913
+					"HOSTNAME=0.0.0.0",
 				},
 				Healthcheck: &container.HealthConfig{
 					Test:     []string{"CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/api/profile', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"},
