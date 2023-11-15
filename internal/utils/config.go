@@ -112,6 +112,7 @@ var Config = config{
 		Image:    Pg15Image,
 		Password: "postgres",
 		RootKey:  "d4dc5b6d4a1d6a10b2c1e76112c994d65db7cec380572cc1839624d4be3fa275",
+		EnabledExtensions: "",
 	},
 	Realtime: realtime{
 		IpVersion: AddressIPv6,
@@ -215,6 +216,7 @@ type (
 		Password     string `toml:"-"`
 		RootKey      string `toml:"-" mapstructure:"root_key"`
 		Pooler       pooler `toml:"pooler"`
+		EnabledExtensions string `toml:"-" mapstructure:"enabled_extensions"`
 	}
 
 	pooler struct {

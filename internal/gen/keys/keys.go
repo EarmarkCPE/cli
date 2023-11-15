@@ -37,6 +37,7 @@ func NewJWTToken(ref, role string, expiry time.Time) *jwt.Token {
 type CustomName struct {
 	DbHost         string `env:"db.host,default=NEXT_PUBLIC_SUPABASE_URL"`
 	DbPassword     string `env:"db.password,default=SUPABASE_DB_PASSWORD"`
+	EnabledExtensions string `env:"db.enabled_extensions,default=SUPABASE_DB_ENABLED_EXTENSIONS"`
 	JWTSecret      string `env:"db.password,default=SUPABASE_AUTH_JWT_SECRET"`
 	AnonKey        string `env:"auth.anon_key,default=SUPABASE_AUTH_ANON_KEY"`
 	ServiceRoleKey string `env:"auth.service_role_key,default=SUPABASE_AUTH_SERVICE_ROLE_KEY"`
