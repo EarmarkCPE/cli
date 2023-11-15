@@ -22,6 +22,7 @@ type CustomName struct {
 	JWTSecret      string `env:"auth.jwt_secret,default=JWT_SECRET"`
 	AnonKey        string `env:"auth.anon_key,default=ANON_KEY"`
 	ServiceRoleKey string `env:"auth.service_role_key,default=SERVICE_ROLE_KEY"`
+	EnabledExtensions string `env:"db.enabled_extensions,default=ENABLED_EXTENSIONS"`
 }
 
 func (c *CustomName) toValues(exclude ...string) map[string]string {
@@ -43,6 +44,7 @@ func (c *CustomName) toValues(exclude ...string) map[string]string {
 	if utils.Config.Inbucket.Enabled && !utils.SliceContains(exclude, utils.InbucketId) && !utils.SliceContains(exclude, utils.ShortContainerImageName(utils.InbucketImage)) {
 		values[c.InbucketURL] = fmt.Sprintf("http://127.0.0.1:%d", utils.Config.Inbucket.Port)
 	}
+	values[c.EnabledExtensions] = utils.Config.Db.EnabledExtensions
 	return values
 }
 
@@ -154,6 +156,7 @@ func PrettyPrint(w io.Writer, exclude ...string) {
 		JWTSecret:      "      " + utils.Aqua("JWT secret"),
 		AnonKey:        "        " + utils.Aqua("anon key"),
 		ServiceRoleKey: "" + utils.Aqua("service_role key"),
+		EnabledExtensions: "      " + utils.Aqua("Extensions"),
 	}
 	values := names.toValues(exclude...)
 	// Iterate through map in order of declared struct fields

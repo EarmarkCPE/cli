@@ -1,6 +1,7 @@
 \set pgpass `echo "$PGPASSWORD"`
 \set jwt_secret `echo "$JWT_SECRET"`
 \set jwt_exp `echo "$JWT_EXP"`
+\set enabled_extensions `echo "$ENABLED_EXTENSIONS"`
 
 ALTER DATABASE postgres SET "app.settings.jwt_secret" TO :'jwt_secret';
 ALTER DATABASE postgres SET "app.settings.jwt_exp" TO :'jwt_exp';
@@ -17,6 +18,27 @@ alter schema _realtime owner to postgres;
 
 create schema if not exists _analytics;
 alter schema _analytics owner to postgres;
+
+CREATE OR REPLACE FUNCTION create_extensions_if_enabled(extensions text)
+RETURNS void AS $$
+DECLARE
+  ext_name text;
+BEGIN
+  FOREACH ext_name IN ARRAY string_to_array(extensions, ',')
+  LOOP
+    -- Remove leading/trailing spaces
+    ext_name := btrim(ext_name);
+    -- Check if the extension name is not empty
+    IF ext_name <> '' THEN
+      -- Dynamically create the extension if it doesn't exist
+      EXECUTE format('CREATE EXTENSION IF NOT EXISTS %I SCHEMA extensions', ext_name);
+    END IF;
+  END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT create_extensions_if_enabled(:'enabled_extensions');
+DROP FUNCTION create_extensions_if_enabled(text);
 
 BEGIN;
 

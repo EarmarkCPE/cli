@@ -61,6 +61,7 @@ func NewContainerConfig() container.Config {
 			"POSTGRES_INITDB_ARGS=--lc-ctype=C.UTF-8",
 			"POSTGRES_INITDB_ARGS=--lc-collate=C.UTF-8",
 			"JWT_SECRET=" + utils.Config.Auth.JwtSecret,
+			"ENABLED_EXTENSIONS=" + utils.Config.Db.EnabledExtensions,
 			fmt.Sprintf("JWT_EXP=%d", utils.Config.Auth.JwtExpiry),
 		},
 		Healthcheck: &container.HealthConfig{
